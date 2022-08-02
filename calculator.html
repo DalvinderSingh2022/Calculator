@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="calculator.css" type="text/css">
+    <title>Calculator</title>
+</head>
+
+<body>
+    <main>
+        <div class="group">
+            <div type="text" id="screen" name="screen">0</div>
+        </div>
+        <div class="group">
+            <button onclick="Clear()" class="symbol">AC</button>
+            <button onclick="Delete()" class="symbol">C</button>
+            <button onclick="symbol(Symbol[4])" class="symbol">%</button>
+            <button onclick="symbol(Symbol[3])" class="symbol">÷</button>
+        </div>
+        <div class="group">
+            <button onclick="number(Numbers[7])">7</button>
+            <button onclick="number(Numbers[8])">8</button>
+            <button onclick="number(Numbers[9])">9</button>
+            <button onclick="symbol(Symbol[2])" class="symbol">x</button>
+        </div>
+        <div class="group">
+            <button onclick="number(Numbers[4])">4</button>
+            <button onclick="number(Numbers[5])">5</button>
+            <button onclick="number(Numbers[6])">6</button>
+            <button onclick="symbol(Symbol[1])" class="symbol">-</button>
+        </div>
+        <div class="group">
+            <button onclick="number(Numbers[1])">1</button>
+            <button onclick="number(Numbers[2])">2</button>
+            <button onclick="number(Numbers[3])">3</button>
+            <button onclick="symbol(Symbol[0])" class="symbol">+</button>
+        </div>
+        <div class="group">
+            <button onclick="symbol(Symbol[5])" class="symbol" id="sqr">X<sup>y</sup></button>
+            <button onclick="number(Numbers[0])">0</button>
+            <button onclick="number(Numbers[10])">00</button>
+            <button class="equalto" onclick="Result()" class="symbol">=</button>
+        </div>
+    </main>
+</body>
+<script>
+   var Numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 00];
+   var Symbol = ['+', '-', '*', '/', '%', '^'];
+   var  Memory = [];
+    
+   var CurrentMemory = '';
+   var CurrentNumber = '0';
+
+   var PowerCount = 0;
+
+   var IsSquaring = false;
+   var IsLastSymbol = false;
+
+    document.querySelector("#sqr").addEventListener("click", function () {
+        IsSquaring = true;
+    });
+
+    function symbol(symbol) {
+        if (IsLastSymbol === false) {
+            document.querySelector("#screen").innerHTML += symbol;
+            Memory.push(CurrentMemory);
+            Memory.push(symbol);
+            CurrentNumber += '' + symbol;
+            CurrentMemory = '';
+            IsSquaring = false;
+            IsLastSymbol = true;
+        }
+    }
+
+
+    function number(number) {
+        if (IsSquaring === true) {
+            square = JSON.stringify(number).sup();
+            document.querySelector("#screen").innerHTML += square;
+            CurrentNumber += '' + square;
+            PowerCount++;
+        }
+        else {
+            document.querySelector("#screen").innerHTML += number;
+            CurrentNumber += '' + number;
+        }
+        CurrentMemory += '' + number;
+        IsLastSymbol = false;
+    }
+
+    function Result() {
+        Memory.push(CurrentMemory);
+        IsSquaring = false;
+
+        for (i = 0; i <= Memory.length; i++) {
+            if (Memory[i] === Symbol[0]) {
+                let result = Number(Memory[i - 1]) + Number(Memory[i + 1]);
+
+                document.querySelector("#screen").innerHTML = result;
+                CurrentMemory = JSON.stringify(result);
+                CurrentNumber = JSON.stringify(result);
+            }
+            if (Memory[i] === Symbol[1]) {
+                let result = Number(Memory[i - 1]) - Number(Memory[i + 1]);
+
+                document.querySelector("#screen").innerHTML = result;
+                CurrentMemory = JSON.stringify(result);
+                CurrentNumber = JSON.stringify(result);
+            }
+            if (Memory[i] === Symbol[2]) {
+                let result = Number(Memory[i - 1]) * Number(Memory[i + 1]);
+
+                document.querySelector("#screen").innerHTML = result;
+                CurrentMemory = JSON.stringify(result);
+                CurrentNumber = JSON.stringify(result);
+            }
+            if (Memory[i] === Symbol[3]) {
+                let result = Number(Memory[i - 1]) / Number(Memory[i + 1]);
+
+                document.querySelector("#screen").innerHTML = result;
+                CurrentMemory = JSON.stringify(result);
+                CurrentNumber = JSON.stringify(result);
+            }
+            if (Memory[i] === Symbol[4]) {
+                let result = Number(Memory[i - 1]) % Number(Memory[i + 1]);
+
+                document.querySelector("#screen").innerHTML = result;
+                CurrentMemory = JSON.stringify(result);
+                CurrentNumber = JSON.stringify(result);
+            }
+            if (Memory[i] === Symbol[5]) {
+                let result = Number(Memory[i - 1]) ** Number(Memory[i + 1]);
+
+                document.querySelector("#screen").innerHTML = result;
+                CurrentMemory = JSON.stringify(result);
+                CurrentNumber = JSON.stringify(result);
+            }
+        };
+        console.log(CurrentMemory)
+        console.log(Memory)
+    }
+
+    function Clear() {
+        document.querySelector("#screen").innerHTML = "0";
+
+        CurrentMemory = '';
+        CurrentNumber = '0';
+        IsSquaring = false;
+    }
+
+    function Delete() {
+        if (PowerCount > 0) {
+            result = CurrentNumber.slice(0, CurrentNumber.length - 12);
+            PowerCount--;
+        }
+        else {
+            result = CurrentNumber.slice(0, CurrentNumber.length - 1);
+            IsSquaring = false;
+        }
+        CurrentMemory = CurrentMemory.slice(0, CurrentMemory.length - 1);
+        document.querySelector("#screen").innerHTML = result;
+
+        CurrentNumber = result;
+    }
+    
+</script>
+
+</html>

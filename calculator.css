@@ -1,0 +1,58 @@
+* {
+    margin: 0;
+}
+
+main {
+    width: 40%;
+    min-width: 300px;
+    margin: 80px auto;
+    box-shadow: 0 0 50px 5px lightgrey;
+    padding: 30px;
+    border-radius: 30px;
+}
+
+.group {
+    display: flex;
+    margin-top: 5px;
+}
+
+.group button {
+    flex: 1;
+    border: none;
+    padding: 20px;
+    font-size: 24px;
+    background-color: #fff;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.group button:hover {
+    background-color: rgba(245, 245, 245, 0.7);
+}
+
+#screen {
+    flex: 4;
+    height: 60px;
+    margin-top: 15px;
+    font-size: 35px;
+    border: none;
+    border-bottom: 1px solid lightgray;
+    outline: none;
+    width: 100%;
+    overflow: hidden;
+    padding: 0 15px;
+}
+
+button.equalto {
+    background-color: rgb(255, 116, 51);
+    color: #fff;
+}
+
+button.equalto:hover {
+    background-color: rgb(255, 116, 51);
+}
+
+button.symbol {
+    color: #ff7433;
+    font-weight: 600;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="calculator.css" type="text/css">
+    <script src="https://kit.fontawesome.com/0606937758.js" crossorigin="anonymous"></script>
+    <title>Calculator</title>
+</head>
+
+<body>
+    <main>
+        <div class="group">
+            <input type="text" id="screen" name="screen">
+        </div>
+        <div class="group">
+            <button id="1" class="transform-button">1</button>
+            <button id="clear" class="symbol">AC</button>
+            <button id="delete" class="symbol">C</button>
+            <button id="**" class="symbol">x<sup>y</sup></button>
+            <button id="/" class="symbol">÷</button>
+        </div>
+        <div class="group">
+            <button id="1" class="transform-button">1</button>
+            <button id="7">7</button>
+            <button id="8">8</button>
+            <button id="9">9</button>
+            <button id="*" class="symbol">x</button>
+        </div>
+        <div class="group">
+            <button id="1" class="transform-button">1</button>
+            <button id="4">4</button>
+            <button id="5">5</button>
+            <button id="6">6</button>
+            <button id="-" class="symbol">-</button>
+        </div>
+        <div class="group">
+            <button id="1" class="transform-button">1</button>
+            <button id="1">1</button>
+            <button id="2">2</button>
+            <button id="3">3</button>
+            <button id="+" class="symbol">+</button>
+        </div>
+        <div class="group">
+            <button id="1" class="transform-button">1</button>
+            <button for="transform" class="symbol"><i class="fa-solid fa-arrow-right-arrow-left"></i></button>
+            <button id="0">0</button>
+            <button id=".">.</button>
+            <button class="equalto">=</button>
+        </div>
+    </main>
+</body>
+<script>
+    var CurrentNumber = '';
+    window.addEventListener("DOMContentLoaded", function (e) {
+        const screen = document.querySelector("#screen");
+
+        let Buttons = document.querySelectorAll("button");
+        Buttons.forEach(function (button) {
+            button.addEventListener("click", function (e) {
+                const button = e.currentTarget;
+
+                screen.value += button.id;
+                CurrentNumber += '' + button.id;
+            });
+        });
+
+        const Clear = document.querySelector("#clear");
+        Clear.addEventListener("click", function () {
+            screen.value = "";
+        });
+
+        const Equalto = document.querySelector(".equalto");
+        Equalto.addEventListener("click", function () {
+            screen.value = eval(screen.value);
+        });
+
+        const Delete = document.querySelector("#delete");
+        Delete.addEventListener("click", function () {
+            result = CurrentNumber.slice(0, CurrentNumber.length - 1);
+            screen.value = result;
+
+            CurrentNumber = result;
+        });
+
+        const transform = document.querySelector("button[for=transform]");
+        transform.addEventListener("click", function () {
+            Buttons = document.querySelectorAll(".transform-button");
+            Buttons.forEach(function (Button) {
+                Button.classList.toggle("transformed");
+            })
+        });
+    });
+</script>
+
+</html>
